@@ -8,7 +8,8 @@ urlpatterns = [
     path('logout/',views.logout,name='logout'),
     path('add/',views.add,name='add'),
     path('search/',views.search_movie,name='search'),
-    path('addrating/',views.add,name='addrating'),
+    path('search/<id>',views.search_movie,name='search_id'),
+    path('addrating/',views.add_rating,name='addrating'),
 
 
 ]

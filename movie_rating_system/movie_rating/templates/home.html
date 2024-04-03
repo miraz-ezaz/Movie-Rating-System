@@ -56,7 +56,7 @@
         <td>{{movie.rating}}</td>
         <td>{{movie.release_date}}</td>
         <td>{{movie.average_rating}}</td>
-        <td>{{movie.id}}</td>
+        <td><a href="{% url 'search_id' movie.id %}">View</a></td>
     </tr>
   {% endfor %}
   </tbody>

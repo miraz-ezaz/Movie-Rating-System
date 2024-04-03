@@ -118,25 +118,36 @@ def add(request):
 def add_rating(request):
     if request.method == 'POST':
         movie_id = request.POST.get('movie_id')
-        rating = request.POST.get('rating')
+        rating = request.POST.get('rate')
         rating_id = get_id('rating')
         try:
             movie = Movie.objects.get(id=movie_id)
             new_rating = Ratings(id=rating_id, movie_id=movie, user_id=User.objects.get(id=request.session['user_id']),rating=float(rating))
             new_rating.save()
+            return redirect('home')
         except Exception as e:
             print("Error:", e)
-def search_movie(request):
-    if request.method == 'POST':
-        name = str(request.POST.get('search_movie')).lower()
-        movie = Movie.objects.get(name=name)
-        if movie:
-            current_movie_id = movie.id
-            current_movie_average_rating = get_average_rating(current_movie_id)
-            movie = {'id':current_movie_id,'name':str(movie.name).title(),'Genre':movie.genre,'Rated':movie.rating,'Release_date':str(movie.release_date),'Average_rating':current_movie_average_rating}
-            return render(request,'movie.html',{'movie':movie})
-    if request.method == 'GET':
-        movie_id = request.GET['id']
+def search_movie(request,id=None):
+    if id is None:
+        if request.method == 'POST':
+            name = str(request.POST.get('search_movie')).lower()
+            movie = Movie.objects.get(name=name)
+            if movie:
+                current_movie_id = movie.id
+                current_movie_average_rating = get_average_rating(current_movie_id)
+                movie = {'id':current_movie_id,'name':str(movie.name).title(),'Genre':movie.genre,'Rated':movie.rating,'Release_date':str(movie.release_date),'Average_rating':current_movie_average_rating}
+                return render(request,'movie.html',{'movie':movie})
+    else:
+        if request.method == 'GET':
+            movie_id = id
+            movie = Movie.objects.get(id=id)
+            if movie:
+                current_movie_id = movie.id
+                current_movie_average_rating = get_average_rating(current_movie_id)
+                movie = {'id': current_movie_id, 'name': str(movie.name).title(), 'Genre': movie.genre,
+                         'Rated': movie.rating, 'Release_date': str(movie.release_date),
+                         'Average_rating': current_movie_average_rating}
+                return render(request, 'movie.html', {'movie': movie})
 
 
 

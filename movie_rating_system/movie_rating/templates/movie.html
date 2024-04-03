@@ -31,7 +31,7 @@
             <h2>{{ key }} : {{ value }}</h2>
     {%endif%}
         {% endfor %}
-     <form action="{url 'addrating'}" method="POST">
+     <form action="{% url 'addrating' %}" method="POST">
     <div class="input-group mb-3">
   <span class="input-group-text" id="inputGroup-sizing-default1">Ratting(Out of 5)</span>
   <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default1"name="rate">
